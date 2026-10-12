@@ -47,7 +47,7 @@ svg.lucide{width:1em;height:1em;stroke-width:1.75;vertical-align:-.12em}
 .sec.paper{--fg:var(--ink);--dim2:var(--ink-dim);--ln:var(--hair-i);--ac:var(--acc-deep);background:var(--paper);color:var(--ink)}
 .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,4.5vw,54px)}
 
-#fx{position:fixed;inset:0;z-index:0;display:block}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;pointer-events:none}
 #veil{position:fixed;inset:0;z-index:1;background:var(--paper);opacity:0;pointer-events:none}
 main{position:relative;z-index:2}
 
@@ -1700,7 +1700,7 @@ const veil = $('#veil'), band = $('#band'), mini = $('#stage-mini');
 const mWrap = document.getElementById('m-wrap');
 const navBtns = $$('.stages button');
 let secTops = [], trCenter = 1, mTop = 0, mBot = 0;
-let tY = scrollY, smY = scrollY, order = .07, orderT = .07, stageIdx = -1;
+let tY = scrollY, smY = scrollY, order = .07, orderT = .07, stageIdx = -1, fieldA = 1;
 
 function measure(){
   secTops = secs.map(s => s.offsetTop);
@@ -1727,8 +1727,7 @@ function frame(t){
   document.body.classList.toggle('light', vp > .5);
   orderT = .07 + .93*clamp01(smY / trCenter);
   order += (orderT - order)*.07;
-  const mVis = smY + innerHeight > mTop + 60 && smY < mBot - 60;
-  if(!mVis) drawField(t/1000, order, 1 - vp);
+  drawField(t/1000, order, 1 - vp);
   requestAnimationFrame(frame);
 }
 
